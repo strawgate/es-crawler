@@ -192,9 +192,9 @@ module ES
     end
 
     def configure_compression(es_config)
-      compress = es_config.fetch('compression', true) # Default to true if not specified
-      @system_logger.info("ES connection compression is #{compress ? 'enabled' : 'disabled'}")
-      { compression: compress }
+      compress = es_config[:compression] != false
+      @system_logger.debug("ES connection compression is #{compress ? 'enabled' : 'disabled'}")
+      return { compression: compress }
     end
 
     def raise_if_necessary(response) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity
